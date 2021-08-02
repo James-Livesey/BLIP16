@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BLIP16</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js"></script>
+        <script src="apihost.js"></script>
+    </head>
+    <body>
+        <div tabindex="0" id="console">
+            <p id="emblem">BLIP16</p>
+            <canvas></canvas>
+            <div id="buttons">
+                <button id="up">⯅</button>
+                <button id="down">⯆</button>
+                <button id="left">⯇</button>
+                <button id="right">⯈</button>
+                <button id="a">A</button>
+                <button id="b">B</button>
+            </div>
+        </div>
+        <div id="editor">
+            <textarea id="program"></textarea>
+            <details open>
+                <summary>Debugger</summary>
+                <textarea disabled id="debugger"></textarea>
+            </details>
+            <details>
+                <summary>Help</summary>
+                <p>None yet!</p>
+            </details>
+        </div>
+    </body>
+</html>

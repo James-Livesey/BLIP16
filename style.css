@@ -1,0 +1,129 @@
+* {
+    font-family: "Press Start K";
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    height: 100%;
+    margin: 0;
+    flex-direction: row-reverse;
+    background-color: black;
+    color: white;
+}
+
+#console {
+    position: relative;
+    width: 30vw;
+    height: 40vw;
+    margin: 1vw;
+    padding: 1vw;
+    padding-top: 5vw;
+    background-color: grey;
+    border-radius: 1vw;
+    cursor: default;
+    user-select: none;
+}
+
+#console canvas {
+    width: 28vw;
+    height: 14vw;
+    background-color: black;
+}
+
+#console #emblem {
+    position: absolute;
+    margin: 0;
+    top: 1.5vw;
+    left: 1vw;
+    font-size: 2vw;
+}
+
+#console #buttons {
+    position: relative;
+    height: 10vw;
+    margin-top: 5vw;
+}
+
+#console #buttons button {
+    position: absolute;
+    width: 3vw;
+    height: 3vw;
+    padding: 0;
+    background-color: black;
+    color: white;
+    font-size: 1.5vw;
+    border: none;
+    border-radius: 1vw;
+    cursor: pointer;
+}
+
+#console #buttons button#up {
+    top: 0;
+    left: calc(25% - 1.5vw);
+}
+
+#console #buttons button#down {
+    bottom: 0;
+    left: calc(25% - 1.5vw);
+}
+
+#console #buttons button#left {
+    top: calc(50% - 1.5vw);
+    left: calc(25% - 1.5vw - 3.5vw);
+}
+
+#console #buttons button#right {
+    top: calc(50% - 1.5vw);
+    left: calc(25% - 1.5vw + 3.5vw);
+}
+
+#console #buttons button#a {
+    top: calc(50% - 1.5vw - 1vw);
+    right: calc(50% - 6vw);
+    background-color: brown;
+}
+
+#console #buttons button#b {
+    top: calc(50% - 1.5vw + 1vw);
+    right: 2.5vw;
+    background-color: brown;
+}
+
+#editor {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+#editor textarea {
+    background-color: inherit;
+    color: inherit;
+    border: none;
+    white-space: nowrap;
+    resize: none;
+    tab-size: 4;
+    outline: none;
+}
+
+#editor textarea#program {
+    flex-grow: 1;
+}
+
+#editor textarea#debugger {
+    width: 100%;
+    height: 20vh;
+    white-space: pre;
+}
+
+#editor details {
+    cursor: default;
+}
+
+#editor details summary {
+    cursor: pointer;
+}
