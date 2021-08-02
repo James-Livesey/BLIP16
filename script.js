@@ -149,7 +149,7 @@ window.addEventListener("load", function() {
             event.target.selectionEnd = selectionEnd + (newValue.length - previousValue.length);
 
             event.preventDefault();
-        } else if (event.key == "Tab" && event.shiftKey) {
+        } else if (event.key == "Tab") {
             while (!previousValue.startsWith("\n") && selectionStart > 0) {
                 selectionStart--;
 
@@ -167,6 +167,22 @@ window.addEventListener("load", function() {
             }
 
             event.target.selectionEnd = selectionEnd + (newValue.length - previousValue.length);
+        } else if (event.key == "Enter") {
+            var lastLine = code.substring(0, selectionEnd).split("\n")[code.substring(0, selectionEnd).split("\n").length - 1];
+            var indentationLevel = 0;
+
+            while (lastLine.startsWith("\t")) {
+                lastLine = lastLine.substring(1);
+
+                indentationLevel++;
+            }
+
+            newValue = "\n" + "\t".repeat(indentationLevel);
+
+            applyNewValue();
+
+            event.target.selectionStart = selectionStart + indentationLevel + 1;
+            event.target.selectionEnd = selectionStart + indentationLevel + 1;
 
             event.preventDefault();
         }
