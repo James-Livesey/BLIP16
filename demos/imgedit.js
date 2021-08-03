@@ -28,10 +28,21 @@ F---F-F-------F--
 -FFF--FFFFF---F--
 `;
 
+const G_MODE_SIZE = `
+-FFF--FFFFF-FFFFF-FFFFF
+F---F---F-------F-F----
+F-------F------F--F----
+-FFF----F-----F---FFF--
+----F---F----F----F----
+F---F---F---F-----F----
+-FFF--FFFFF-FFFFF-FFFFF
+`;
+
 const modes = {
 	DRAW: 0,
 	INK: 1,
-	SET: 2
+	SET: 2,
+	SIZE: 3
 };
 
 var hexChars = [];
@@ -227,6 +238,20 @@ function drawDrawing() {
 	}
 }
 
+function drawBoundary() {
+	for (var x = 0; x <= width; x++) {
+		if (x % 4 == 0) continue;
+		
+		setPixel(x, height, 0x0);
+	}
+
+	for (var y = 0; y <= height; y++) {
+		if (y % 4 == 0) continue;
+		
+		setPixel(width, y, 0x0);
+	}
+}
+
 function drawPanel() {
 	for (var y = 0; y < 64; y++) {
 		for (var x = 0; x < 34; x++) {
@@ -258,6 +283,8 @@ function drawPalette() {
 			i == selectedColour
 		);
 	}
+	
+	drawHex(127 - 28, 18, BLIP16.palette[selectedColour], 6);
 }
 
 function drawMode(m = mode) {
@@ -273,6 +300,10 @@ function drawMode(m = mode) {
 		case modes.SET:
 			drawGraphic(128 - 18, 64 - 8, G_MODE_SET);
 			break;
+		
+		case modes.SIZE:
+			drawGraphic(128 - 24, 64 - 8, G_MODE_SIZE);
+			break;
 	}
 }
 
@@ -280,6 +311,7 @@ function renderAll() {
 	drawCheckerboard();
 	
 	drawDrawing();
+	drawBoundary();
 	
 	drawPanel();
 	drawPalette();
@@ -333,6 +365,74 @@ function handleButtons() {
 			if (selectedColour < 0) selectedColour += 16;
 			
 			selectedColour = selectedColour % 16;
+			
+			if (BLIP16.buttons.b) mode = modes.SIZE;
+			
+			break;
+
+		case modes.SIZE:
+			oldDrawing = [...drawing];
+			
+			if (BLIP16.buttons.up) {
+				height--;
+				
+				if (height < 1) height = 1;
+				else {
+					drawing = new Uint8Array(width * height).fill(16);
+					
+					for (var i = 0; i < drawing.length; i++) {
+						drawing[i] = oldDrawing[i];
+					}
+				}
+			} else if (BLIP16.buttons.down) {
+				height++;
+				
+				if (height > 64) height = 64;
+				else {
+					oldDrawing = [...drawing];
+					drawing = new Uint8Array(width * height).fill(16);
+
+					for (var i = 0; i < oldDrawing.length; i++) {
+						drawing[i] = oldDrawing[i];
+					}
+				}
+			} else if (BLIP16.buttons.left) {
+				width--;
+				
+				if (width < 1) width = 1;
+				else {
+					drawing = new Uint8Array(width * height).fill(16);
+					
+					var oldI = 0;
+					
+					for (var i = 0; i < drawing.length; i++) {
+						if (i % width == width - 1) {
+							oldI++;
+						} else {
+							drawing[i] = oldDrawing[oldI];
+						}
+						
+						oldI++;
+					}
+				}
+			} else if (BLIP16.buttons.right) {
+				width++;
+				
+				if (width > 64) width = 64;
+				else {
+					drawing = new Uint8Array(width * height).fill(16);
+					
+					var oldI = 0;
+					
+					for (var i = 0; i < drawing.length; i++) {
+						if (i % width == width - 1) continue;
+						
+						drawing[i] = oldDrawing[oldI];
+						
+						oldI++;
+					}
+				}
+			}
 			
 			if (BLIP16.buttons.b) mode = modes.DRAW;
 			
