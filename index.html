@@ -27,9 +27,35 @@
                 <summary>Debugger</summary>
                 <textarea disabled spellcheck="false" id="debugger"></textarea>
             </details>
-            <details>
+            <details id="help">
                 <summary>Help</summary>
-                <p>None yet!</p>
+                <p>
+                    All console hardware access is available under the
+                    <code>BLIP16</code> object.
+                </p>
+                <p>
+                    <code>BLIP16.buffer</code> is a <code>Uint8Array</code>
+                    which contains an item for each pixel on the display, where
+                    the first item of the array is the top-leftmost pixel, and
+                    the last item is the bottom-rightmost, where each item is
+                    sequenced in a left-to-right, then top-to-bottom order.
+                </p>
+                <p>
+                    Each item in <code>BLIP16.buffer</code> is a number in the
+                    range of <code>0</code> to <code>15</code> inclusive, with
+                    each value representing a different colour, as indexed in
+                    the <code>BLIP16.palette</code> array. Each item in that
+                    array is a 24-bit colour value.
+                </p>
+                <p>
+                    Buttons are represented as an object of boolean values under
+                    <code>BLIP16.buttons</code>. The available keys for this
+                    object are <code>up</code>, <code>down</code>,
+                    <code>left</code>, <code>right</code>, <code>a</code> and
+                    <code>b</code>. Their values are <code>true</code> when
+                    their respective button is pressed, and <code>false</code>
+                    when not.
+                </p>
             </details>
         </div>
     </body>

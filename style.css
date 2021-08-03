@@ -16,6 +16,10 @@ body {
     color: white;
 }
 
+code {
+    background-color: #444444;
+}
+
 #console {
     position: relative;
     width: 30vw;
@@ -126,4 +130,9 @@ body {
 
 #editor details summary {
     cursor: pointer;
+}
+
+#editor details#help {
+    max-height: 30vh;
+    overflow: auto;
 }
